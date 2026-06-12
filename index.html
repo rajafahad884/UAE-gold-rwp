@@ -185,5 +185,36 @@ function calculateGold() {
     }
   });
 </script>
+<script>
+// RWP ka extra margin - isko badal sakte ho
+const RWP_PREMIUM = 3000; // RWP me itna zyada hota hai
+
+async function autoUpdateGoldRate() {
+  try {
+    // International gold rate API
+    const res = await fetch('https://api.metals.live/v1/spot/gold');
+    const data = await res.json();
+
+    // Dollar se PKR aur per tola me convert
+    const usdRate = 278; // 1 USD = 278 PKR
+    const perOunce = data[0].price;
+    const perTolaUSD = perOunce / 2.666;
+    const perTolaPKR = Math.round(perTolaUSD * usdRate);
+
+    // RWP ka premium add karo
+    const finalRate = perTolaPKR + RWP_PREMIUM;
+
+    // Website pe update karo
+    document.getElementById('tola-price').innerText = 'Rs ' + finalRate.toLocaleString('en-PK');
+
+    // Har 5 minute baad fresh rate lao
+    setTimeout(autoUpdateGoldRate, 300000);
+
+  } catch (e) {
+    console.log('Rate update failed');
+  }
+}
+autoUpdateGoldRate();
+</script>
 </body>
 </html>
