@@ -185,21 +185,10 @@ function calculateGold() {
     }
   });
 </script>
+
 <script>
-// RWP ka extra margin - isko badal sakte ho
-const RWP_PREMIUM = 3000; // RWP me itna zyada hota hai
-
-async function autoUpdateGoldRate() {
-  try {
-    // International gold rate API
-    const res = await fetch('https://api.metals.live/v1/spot/gold');
-    const data = await res.json();
-
-    // Dollar se PKR aur per tola me convert
-    const usdRate = 278; // 1 USD = 278 PKR
-    const perOunce = data[0].price;
-   <script>
 const RWP_PREMIUM = 3000;
+
 function updateRate() {
   fetch('https://api.gold-api.com/price/XAU')
   .then(res => res.json())
@@ -211,10 +200,11 @@ function updateRate() {
     const rateEl = document.getElementById('tola-price');
     if(rateEl) rateEl.innerText = 'Rs ' + finalRate.toLocaleString('en-PK');
   })
-  .catch(e => console.log('API Error'));
+  .catch(e => console.log('API Error:', e));
 }
+
 updateRate();
 setInterval(updateRate, 300000);
-</script> 
+</script>
 </body>
 </html>
