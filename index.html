@@ -85,7 +85,7 @@
 </div>
 
 <!-- WhatsApp Button -->
-<a href="https://wa.me/923001234567?text=Salam, UAE Gold ka rate poochna hai" 
+<a href="https://wa.me/923165008845?text=Salam, UAE Gold ka rate poochna hai" 
    style="position:fixed; bottom:20px; right:20px; background:#25D366; color:white; padding:15px 20px; border-radius:50px; text-decoration:none; font-weight:bold; box-shadow:0 4px 10px rgba(0,0,0,0.3); z-index:999; font-family:'Noto Nastaliq Urdu';">
    💬 WhatsApp
 </a>
@@ -131,7 +131,7 @@ function calculateGold() {
       if(type === 'rate') {
         alert('UAE Gold Rawalpindi: آج 24 قیراط کا ریٹ Rs ' + currentRate.toLocaleString() + ' فی تولہ ہے');
       } else {
-        alert('آرڈر کے لیے فارم بھریں یا کال کریں: 03XX-XXXXXXX');
+        alert('آرڈر کے لیے فارم بھریں یا کال کریں: 0316-5008845');
       }
     }
 
@@ -152,5 +152,38 @@ function calculateGold() {
       }
     }
   </script>
+
+<!-- 7 Din Ka Graph -->
+<div style="background:#1e293b; padding:20px; border-radius:12px; margin:20px 0; border-right:4px solid #fbbf24;">
+  <h3 style="color:#fbbf24; margin:0 0 15px 0; font-family:'Noto Nastaliq Urdu';">Last 7 Days Trend</h3>
+  <canvas id="goldChart" style="width:100%; max-height:250px;"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ctx = document.getElementById('goldChart');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['6 Din Pehle', '5 Din', '4 Din', '3 Din', '2 Din', 'Kal', 'Aaj'],
+      datasets: [{
+        label: 'Gold Rate per Tola',
+        data: [241000, 242500, 243000, 243800, 244200, 243800, 245000],
+        borderColor: '#fbbf24',
+        backgroundColor: 'rgba(251, 191, 36, 0.1)',
+        tension: 0.4,
+        fill: true
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { labels: { color: 'white' } } },
+      scales: {
+        y: { ticks: { color: 'white' }, grid: { color: '#334155' } },
+        x: { ticks: { color: 'white' }, grid: { color: '#334155' } }
+      }
+    }
+  });
+</script>
 </body>
 </html>
