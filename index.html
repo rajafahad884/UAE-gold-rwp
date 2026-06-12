@@ -198,23 +198,23 @@ async function autoUpdateGoldRate() {
     // Dollar se PKR aur per tola me convert
     const usdRate = 278; // 1 USD = 278 PKR
     const perOunce = data[0].price;
-    const perTolaUSD = perOunce / 2.666;
-    const perTolaPKR = Math.round(perTolaUSD * usdRate);
-
-    // RWP ka premium add karo
+   <script>
+const RWP_PREMIUM = 3000;
+function updateRate() {
+  fetch('https://api.gold-api.com/price/XAU')
+  .then(res => res.json())
+  .then(data => {
+    const perOunce = data.price;
+    const perTolaUSD = perOunce / 31.103 / 0.375;
+    const perTolaPKR = Math.round(perTolaUSD * 278);
     const finalRate = perTolaPKR + RWP_PREMIUM;
-
-    // Website pe update karo
-    document.getElementById('tola-price').innerText = 'Rs ' + finalRate.toLocaleString('en-PK');
-
-    // Har 5 minute baad fresh rate lao
-    setTimeout(autoUpdateGoldRate, 300000);
-
-  } catch (e) {
-    console.log('Rate update failed');
-  }
+    const rateEl = document.getElementById('tola-price');
+    if(rateEl) rateEl.innerText = 'Rs ' + finalRate.toLocaleString('en-PK');
+  })
+  .catch(e => console.log('API Error'));
 }
-autoUpdateGoldRate();
-</script>
+updateRate();
+setInterval(updateRate, 300000);
+</script> 
 </body>
 </html>
