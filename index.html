@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UAE Gold - Rawalpindi | Live Gold Rates</title>
+  <style>
+    body { 
+      font-family: 'Noto Nastaliq Urdu', sans-serif; 
+      background: #0f172a; 
+      color: #fff; 
+      margin: 0; 
+      padding: 15px;
+    }
+    .container { max-width: 500px; margin: 0 auto; }
+    .header { text-align: center; margin-bottom: 20px; }
+    .header h1 { color: #fbbf24; margin: 5px 0; }
+    .problem-box { 
+      background: #1e293b; 
+      border-right: 4px solid #fbbf24;
+      padding: 15px; 
+      border-radius: 8px; 
+      margin: 15px 0;
+    }
+    .price-card { 
+      background: #1e293b; 
+      border-radius: 12px; 
+      padding: 20px; 
+      margin: 15px 0;
+      text-align: center;
+    }
+    .price { font-size: 2rem; font-weight: 700; color: #22c55e; }
+    .change { font-size: 0.9rem; }
+    .change.up { color: #22c55e; } 
+    .change.down { color: #ef4444; }
+    .chat-btn { 
+      background: #fbbf24; 
+      color: #000; 
+      border: none; 
+      padding: 12px; 
+      width: 100%; 
+      border-radius: 8px; 
+      font-size: 1rem;
+      margin: 8px 0;
+      font-weight: bold;
+    }
+    .tally-form { background: #1e293b; padding: 15px; border-radius: 8px; margin-top: 20px; }
+    input { 
+      width: 100%; 
+      padding: 10px; 
+      margin: 8px 0; 
+      border-radius: 6px; 
+      border: 1px solid #334155;
+      background: #0f172a;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>UAE Gold</h1>
+      <p>Rawalpindi - Live Gold Rates</p>
+    </div>
+
+    <div class="problem-box">
+      <h3>یہ ویب سائٹ کیوں بنائی؟</h3>
+      <p><b>مسئلہ:</b> روز کسٹمر کال کرتے ہیں "آج سونے کا ریٹ کیا ہے؟ ریٹ کیوں بڑھا؟"</p>
+      <p><b>حل:</b> یہ ویب سائٹ 24/7 لائیو ریٹ + وجہ + چیٹ سپورٹ دیتی ہے۔ ٹائم بچائیں۔</p>
+    </div>
+
+    <div class="price-card">
+      <h2>24 قیراط فی تولہ</h2>
+      <p class="price" id="tola-price">Rs 2,45,000</p>
+      <span class="change up" id="tola-change">+ Rs 1,200 آج</span>
+    </div>
+
+    <div class="price-card">
+      <h3>ریٹ بڑھنے کی وجہ</h3>
+      <ul id="reasons" style="text-align: right;">
+        <li>ڈالر 278 سے 280 ہو گیا</li>
+        <li>انٹرنیشنل مارکیٹ $15 تیز</li>
+        <li>شادی سیزن ڈیمانڈ</li>
+      </ul>
+    </div>
+
+    <button class="chat-btn" onclick="openChat('rate')">💬 ریٹ پوچھیں</button>
+    <button class="chat-btn" onclick="openChat('order')">📝 آرڈر بک کروائیں</button>
+
+    <div class="tally-form">
+      <h3>Tally کے لیے انکوائری</h3>
+      <input type="text" id="name" placeholder="آپ کا نام">
+      <input type="number" id="weight" placeholder="وزن تولہ میں">
+      <input type="tel" id="phone" placeholder="فون نمبر">
+      <button class="chat-btn" onclick="sendToTally()">Tally میں بھیجیں</button>
+      <p id="tally-msg" style="font-size:0.8rem; color:#94a3b8;"></p>
+    </div>
+  </div>
+
+  <script>
+    // Dummy data - baad me API se connect karenge
+    let currentRate = 245000;
+    
+    function openChat(type) {
+      if(type === 'rate') {
+        alert('UAE Gold Rawalpindi: آج 24 قیراط کا ریٹ Rs ' + currentRate.toLocaleString() + ' فی تولہ ہے');
+      } else {
+        alert('آرڈر کے لیے فارم بھریں یا کال کریں: 03XX-XXXXXXX');
+      }
+    }
+
+    function sendToTally() {
+      const name = document.getElementById('name').value;
+      const weight = document.getElementById('weight').value;
+      const phone = document.getElementById('phone').value;
+      
+      if(name && weight) {
+        const total = weight * currentRate;
+        document.getElementById('tally-msg').innerText = 
+          `ٹھیک ہے ${name}! ${weight} تولہ = Rs ${total.toLocaleString()}. Tally XML تیار ہے۔`;
+        
+        // Ye data Tally me import ho sakta hai
+        console.log(`<TALLYMESSAGE><LEDGER NAME="${name}"><AMOUNT>${total}</AMOUNT></LEDGER></TALLYMESSAGE>`);
+      } else {
+        alert('براہ کرم نام اور وزن لکھیں');
+      }
+    }
+  </script>
+</body>
+</html>
