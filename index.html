@@ -75,6 +75,32 @@
       <span class="change up" id="tola-change">+ Rs 1,200 آج</span>
     </div>
 
+
+<!-- Gold Calculator -->
+<div style="background:#1e293b; padding:20px; border-radius:12px; margin:20px 0; border-right:4px solid #fbbf24;">
+  <h3 style="color:#fbbf24; margin:0 0 10px 0;">Gold Calculator</h3>
+  <input id="grams" type="number" placeholder="Kitne gram?" style="width:100%; padding:12px; margin:10px 0; border-radius:8px; border:none; font-family:'Noto Nastaliq Urdu'; box-sizing:border-box;">
+  <button onclick="calculateGold()" style="width:100%; padding:12px; background:#fbbf24; border:none; border-radius:8px; font-weight:bold; font-family:'Noto Nastaliq Urdu';">Price Nikalo</button>
+  <h2 id="calcResult" style="color:white; margin:15px 0 0 0;">Rs 0</h2>
+</div>
+
+<!-- WhatsApp Button -->
+<a href="https://wa.me/923001234567?text=Salam, UAE Gold ka rate poochna hai" 
+   style="position:fixed; bottom:20px; right:20px; background:#25D366; color:white; padding:15px 20px; border-radius:50px; text-decoration:none; font-weight:bold; box-shadow:0 4px 10px rgba(0,0,0,0.3); z-index:999; font-family:'Noto Nastaliq Urdu';">
+   💬 WhatsApp
+</a>
+
+<script>
+function calculateGold() {
+  let rateText = document.getElementById('tola-price').innerText;
+  let tolaRate = parseInt(rateText.replace(/[^0-9]/g,''));
+  let grams = document.getElementById('grams').value;
+  if(!grams) return;
+  let price = Math.round((tolaRate / 11.664) * grams);
+  document.getElementById('calcResult').innerText = 'Rs ' + price.toLocaleString('en-PK');
+}
+</script>
+
     <div class="price-card">
       <h3>ریٹ بڑھنے کی وجہ</h3>
       <ul id="reasons" style="text-align: right;">
