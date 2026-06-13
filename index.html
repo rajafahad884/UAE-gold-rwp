@@ -1,189 +1,165 @@
 <!DOCTYPE html>
 <html lang="ur" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UAE Gold - Rawalpindi | Live Gold Rates</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    body { 
-      font-family: 'Noto Nastaliq Urdu', sans-serif; 
-      background: #0f172a; 
-      color: #fff; 
-      margin: 0; 
-      padding: 15px;
-    }
-    .container { max-width: 500px; margin: 0 auto; }
-    .header { text-align: center; margin-bottom: 20px; }
-    .header h1 { color: #fbbf24; margin: 5px 0; }
-    .problem-box { 
-      background: #1e293b; 
-      border-right: 4px solid #fbbf24;
-      padding: 15px; 
-      border-radius: 8px; 
-      margin: 15px 0;
-    }
-    .price-card { 
-      background: #1e293b; 
-      border-radius: 12px; 
-      padding: 20px; 
-      margin: 15px 0;
-      text-align: center;
-    }
-    .price { font-size: 2rem; font-weight: 700; color: #22c55e; }
-    .change { font-size: 0.9rem; }
-    .change.up { color: #22c55e; } 
-    .change.down { color: #ef4444; }
-    .chat-btn { 
-      background: #fbbf24; 
-      color: #000; 
-      border: none; 
-      padding: 12px; 
-      width: 100%; 
-      border-radius: 8px; 
-      font-size: 1rem;
-      margin: 8px 0;
-      font-weight: bold;
-      font-family: 'Noto Nastaliq Urdu';
-    }
-    .tally-form { background: #1e293b; padding: 15px; border-radius: 8px; margin-top: 20px; }
-    input { 
-      width: 100%; 
-      padding: 10px; 
-      margin: 8px 0; 
-      border-radius: 6px; 
-      border: 1px solid #334155;
-      background: #0f172a;
-      color: white;
-      box-sizing: border-box;
-      font-family: 'Noto Nastaliq Urdu';
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UAE Gold Rawalpindi - Live Gold Rates</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f8fafc; color: #0F172A; }
+        .urdu { font-family: 'Noto Nastaliq Urdu', serif; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .hero { background: linear-gradient(135deg, #0F172A 0%, #1e293b 100%); color: white; padding: 80px 20px; text-align: center; border-radius: 20px; margin-bottom: 40px; }
+        .hero h1 { font-size: 3rem; color: #D4AF37; margin-bottom: 20px; }
+        .hero p { font-size: 1.2rem; margin-bottom: 30px; }
+        .btn { background: #D4AF37; color: #0F172A; padding: 15px 40px; border: none; border-radius: 50px; font-weight: 700; font-size: 1.1rem; cursor: pointer; text-decoration: none; display: inline-block; }
+        .btn:hover { background: #c5a02e; transform: translateY(-2px); }
+        .section { margin: 60px 0; }
+        .section h2 { text-align: center; font-size: 2.5rem; margin-bottom: 40px; color: #0F172A; }
+        .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-top: 4px solid #D4AF37; }
+        .card h3 { color: #0F172A; margin-bottom: 15px; font-size: 1.3rem; }
+        .rate-display { font-size: 3rem; font-weight: 800; color: #D4AF37; text-align: center; margin: 20px 0; }
+        .calculator { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .calculator input { width: 100%; padding: 15px; font-size: 1.2rem; border: 2px solid #e2e8f0; border-radius: 10px; margin: 10px 0; }
+        .result { font-size: 2rem; color: #D4AF37; font-weight: 700; margin-top: 20px; text-align: center; }
+        .whatsapp { position: fixed; bottom: 30px; left: 30px; background: #25D366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; box-shadow: 0 4px 12px rgba(37,211,102,0.4); text-decoration: none; z-index: 1000; }
+        .footer { text-align: center; padding: 40px 20px; color: #64748b; }
+        @media (max-width: 768px) { .hero h1 { font-size: 2rem; } .cards { grid-template-columns: 1fr; } }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <h1>UAE Gold</h1>
-      <p>Rawalpindi - Live Gold Rates</p>
-    </div>
-
-    <div class="problem-box">
-      <h3>یہ ویب سائٹ کیوں بنائی؟</h3>
-      <p><b>مسئلہ:</b> روز کسٹمر کال کرتے ہیں "آج سونے کا ریٹ کیا ہے؟ ریٹ کیوں بڑھا؟"</p>
-      <p><b>حل:</b> یہ ویب سائٹ 24/7 لائیو ریٹ + وجہ + چیٹ سپورٹ دیتی ہے۔ ٹائم بچائیں۔</p>
-    </div>
-
-    <div class="price-card">
-      <h2>24 قیراط فی تولہ</h2>
-      <p class="price" id="tola-price">Rs 4,52,000</p>
-      <span class="change up" id="tola-change">+ Rs 3,500 آج</span>
-    </div>
-
-    <!-- Gold Calculator -->
-    <div style="background:#1e293b; padding:20px; border-radius:12px; margin:20px 0; border-right:4px solid #fbbf24;">
-      <h3 style="color:#fbbf24; margin:0 0 10px 0;">Gold Calculator</h3>
-      <input id="grams" type="number" placeholder="Kitne gram?">
-      <button class="chat-btn" onclick="calculateGold()">Price Nikalo</button>
-      <h2 id="calcResult" style="color:white; margin:15px 0 0 0;">Rs 0</h2>
-    </div>
-
     <!-- WhatsApp Button -->
-    <a href="https://wa.me/923165008845?text=Salam, UAE Gold ka rate poochna hai" 
-       style="position:fixed; bottom:20px; right:20px; background:#25D366; color:white; padding:15px 20px; border-radius:50px; text-decoration:none; font-weight:bold; box-shadow:0 4px 10px rgba(0,0,0,0.3); z-index:999; font-family:'Noto Nastaliq Urdu';">
-       💬 WhatsApp
-    </a>
+    <a href="https://wa.me/923165008845?text=Salam! Sone ka rate kya hai?" class="whatsapp" target="_blank">💬</a>
 
-    <div class="price-card">
-      <h3>ریٹ بڑھنے کی وجہ</h3>
-      <ul id="reasons" style="text-align: right;">
-        <li>ڈالر 278 سے 280 ہو گیا</li>
-        <li>انٹرنیشنل مارکیٹ $15 تیز</li>
-        <li>شادی سیزن ڈیمانڈ</li>
-      </ul>
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1 class="urdu">UAE Gold Rawalpindi</h1>
+            <p class="urdu">24/7 Live Gold Rates + Instant Calculator + Direct WhatsApp</p>
+            <a href="#calculator" class="btn urdu">آج کا ریٹ چیک کریں</a>
+        </div>
+
+        <!-- Live Rate -->
+        <div class="section">
+            <div class="card" style="text-align: center;">
+                <h3 class="urdu">آج کا لائیو ریٹ</h3>
+                <div class="rate-display">Rs 4,52,000</div>
+                <p class="urdu">فی تولہ - اپڈیٹ: ابھی</p>
+            </div>
+        </div>
+
+        <!-- Problem Section -->
+        <div class="section">
+            <h2 class="urdu">مسائل</h2>
+            <div class="cards">
+                <div class="card">
+                    <h3 class="urdu">📞 روز 20-30 کالز</h3>
+                    <p class="urdu">گاہک بار بار ریٹ پوچھتے ہیں، وقت ضائع ہوتا ہے</p>
+                </div>
+                <div class="card">
+                    <h3 class="urdu">🧮 حساب میں غلطی</h3>
+                    <p class="urdu">مینوئل کیلکولیشن سے غلطی ہو جاتی ہے</p>
+                </div>
+                <div class="card">
+                    <h3 class="urdu">📉 ریٹ کیوں بدلا؟</h3>
+                    <p class="urdu">گاہک کو سمجھ نہیں آتا ریٹ اوپر نیچے کیوں ہوتا ہے</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="section">
+            <h2 class="urdu">حل</h2>
+            <div class="cards">
+                <div class="card">
+                    <h3 class="urdu">⚡ Instant Rate Display</h3>
+                    <p class="urdu">ویب سائٹ کھولو، ریٹ سامنے</p>
+                </div>
+                <div class="card">
+                    <h3 class="urdu">🧮 Auto Calculator</h3>
+                    <p class="urdu">گرام ڈالو، قیمت فوراً نکلے</p>
+                </div>
+                <div class="card">
+                    <h3 class="urdu">💬 One-Click WhatsApp</h3>
+                    <p class="urdu">ڈائریکٹ آرڈر بٹن</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calculator Demo -->
+        <div class="section" id="calculator">
+            <h2 class="urdu">لائیو کیلکولیٹر</h2>
+            <div class="calculator">
+                <label class="urdu">گرام درج کریں:</label>
+                <input type="number" id="grams" placeholder="مثلاً: 10" oninput="calculate()">
+                <div class="result" id="result">Rs 0</div>
+                <p class="urdu" style="text-align: center; margin-top: 10px; color: #64748b;">ریٹ: Rs 4,52,000 فی تولہ</p>
+            </div>
+        </div>
+
+        <!-- Graph -->
+        <div class="section">
+            <h2 class="urdu">7 دن کا ٹرینڈ</h2>
+            <div class="card">
+                <canvas id="goldChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Tech Stack -->
+        <div class="section">
+            <h2 class="urdu">ٹیکنالوجی</h2>
+            <div class="cards">
+                <div class="card"><h3>GitHub Pages</h3><p>Free hosting</p></div>
+                <div class="card"><h3>Chart.js</h3><p>Live graphs</p></div>
+                <div class="card"><h3>WhatsApp API</h3><p>Direct chat</p></div>
+            </div>
+        </div>
+
+        <!-- Contact -->
+        <div class="section" style="text-align: center;">
+            <h2 class="urdu">رابطہ کریں</h2>
+            <p class="urdu">📍 Rawalpindi, Punjab</p>
+            <a href="https://wa.me/923165008845" class="btn urdu" style="margin-top: 20px;">WhatsApp پر آرڈر کریں</a>
+        </div>
+
+        <div class="footer urdu">
+            <p>© 2026 UAE Gold Rawalpindi. All rights reserved.</p>
+        </div>
     </div>
 
-    <button class="chat-btn" onclick="openChat('rate')">💬 ریٹ پوچھیں</button>
-    <button class="chat-btn" onclick="openChat('order')">📝 آرڈر بک کروائیں</button>
+    <script>
+        // Calculator
+        function calculate() {
+            const grams = document.getElementById('grams').value;
+            const rate = 452000; // Yahan rate change kar sakte hain
+            const tola = 11.664; // 1 tola = 11.664 grams
+            const price = (grams / tola) * rate;
+            document.getElementById('result').innerText = 'Rs ' + Math.round(price).toLocaleString();
+        }
 
-    <div class="tally-form">
-      <h3>Tally کے لیے انکوائری</h3>
-      <input type="text" id="name" placeholder="آپ کا نام">
-      <input type="number" id="weight" placeholder="وزن تولہ میں">
-      <input type="tel" id="phone" placeholder="فون نمبر">
-      <button class="chat-btn" onclick="sendToTally()">Tally میں بھیجیں</button>
-      <p id="tally-msg" style="font-size:0.8rem; color:#94a3b8;"></p>
-    </div>
-
-    <!-- 7 Din Ka Graph -->
-    <div style="background:#1e293b; padding:20px; border-radius:12px; margin:20px 0; border-right:4px solid #fbbf24;">
-      <h3 style="color:#fbbf24; margin:0 0 15px 0;">Last 7 Days Trend</h3>
-      <canvas id="goldChart" style="width:100%; max-height:250px;"></canvas>
-    </div>
-  </div>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-// FAHAD BHAI KA FIX RATE - KOI API NAHI
-let currentRate = 452000; 
-
-// Rate seedha set kar do
-document.getElementById('tola-price').innerText = 'Rs ' + currentRate.toLocaleString('en-PK');
-
-// Calculator
-function calculateGold() {
-  let grams = document.getElementById('grams').value;
-  if(!grams) return;
-  let price = Math.round((currentRate / 11.664) * grams);
-  document.getElementById('calcResult').innerText = 'Rs ' + price.toLocaleString('en-PK');
-}
-
-// Chat buttons
-function openChat(type) {
-  if(type === 'rate') {
-    alert('UAE Gold Rawalpindi: آج 24 قیراط کا ریٹ Rs ' + currentRate.toLocaleString('en-PK') + ' فی تولہ ہے');
-  } else {
-    alert('آرڈر کے لیے فارم بھریں یا کال کریں: 0316-5008845');
-  }
-}
-
-// Tally
-function sendToTally() {
-  const name = document.getElementById('name').value;
-  const weight = document.getElementById('weight').value;
-  if(name && weight) {
-    const total = weight * currentRate;
-    document.getElementById('tally-msg').innerText = 
-      `ٹھیک ہے ${name}! ${weight} تولہ = Rs ${total.toLocaleString('en-PK')}. Tally XML تیار ہے۔`;
-  } else {
-    alert('براہ کرم نام اور وزن لکھیں');
-  }
-}
-
-// Graph
-const ctx = document.getElementById('goldChart');
-new Chart(ctx, {
-  type: 'line',
-  data: {
-    labels: ['6 Din Pehle', '5 Din', '4 Din', '3 Din', '2 Din', 'Kal', 'Aaj'],
-    datasets: [{
-      label: 'Gold Rate per Tola',
-      data: [444000, 446500, 448000, 449800, 450200, 448500, 452000],
-      borderColor: '#fbbf24',
-      backgroundColor: 'rgba(251, 191, 36, 0.1)',
-      tension: 0.4,
-      fill: true
-    }]
-  },
-  options: {
-    responsive: true,
-    plugins: { legend: { labels: { color: 'white' } } },
-    scales: {
-      y: { ticks: { color: 'white' }, grid: { color: '#334155' } },
-      x: { ticks: { color: 'white' }, grid: { color: '#334155' } }
-    }
-  }
-});
-</script>
+        // Graph
+        const ctx = document.getElementById('goldChart');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['6 دن پہلے', '5', '4', '3', '2', 'کل', 'آج'],
+                datasets: [{
+                    label: 'سونا ریٹ',
+                    data: [448000, 449500, 450000, 451200, 451500, 451800, 452000],
+                    borderColor: '#D4AF37',
+                    backgroundColor: 'rgba(212, 175, 55, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } }
+            }
+        });
+    </script>
 </body>
 </html>
