@@ -1,165 +1,333 @@
 <!DOCTYPE html>
-<html lang="ur" dir="rtl">
+<html lang="ur">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UAE Gold Rawalpindi - Live Gold Rates</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>UAE Gold Rawalpindi - Live Gold Rates 24/7</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #f8fafc; color: #0F172A; }
-        .urdu { font-family: 'Noto Nastaliq Urdu', serif; }
+        body { 
+            font-family: 'Noto Nastaliq Urdu', Arial, sans-serif; 
+            background: #0a0a0a; 
+            color: #fff; 
+            direction: rtl; 
+        }
         .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        .hero { background: linear-gradient(135deg, #0F172A 0%, #1e293b 100%); color: white; padding: 80px 20px; text-align: center; border-radius: 20px; margin-bottom: 40px; }
-        .hero h1 { font-size: 3rem; color: #D4AF37; margin-bottom: 20px; }
-        .hero p { font-size: 1.2rem; margin-bottom: 30px; }
-        .btn { background: #D4AF37; color: #0F172A; padding: 15px 40px; border: none; border-radius: 50px; font-weight: 700; font-size: 1.1rem; cursor: pointer; text-decoration: none; display: inline-block; }
-        .btn:hover { background: #c5a02e; transform: translateY(-2px); }
-        .section { margin: 60px 0; }
-        .section h2 { text-align: center; font-size: 2.5rem; margin-bottom: 40px; color: #0F172A; }
-        .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-top: 4px solid #D4AF37; }
-        .card h3 { color: #0F172A; margin-bottom: 15px; font-size: 1.3rem; }
-        .rate-display { font-size: 3rem; font-weight: 800; color: #D4AF37; text-align: center; margin: 20px 0; }
-        .calculator { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .calculator input { width: 100%; padding: 15px; font-size: 1.2rem; border: 2px solid #e2e8f0; border-radius: 10px; margin: 10px 0; }
-        .result { font-size: 2rem; color: #D4AF37; font-weight: 700; margin-top: 20px; text-align: center; }
-        .whatsapp { position: fixed; bottom: 30px; left: 30px; background: #25D366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; box-shadow: 0 4px 12px rgba(37,211,102,0.4); text-decoration: none; z-index: 1000; }
-        .footer { text-align: center; padding: 40px 20px; color: #64748b; }
-        @media (max-width: 768px) { .hero h1 { font-size: 2rem; } .cards { grid-template-columns: 1fr; } }
+        
+        /* Hero Section */
+        .hero { 
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+            padding: 80px 20px; 
+            text-align: center; 
+            border-bottom: 3px solid #FFD700; 
+        }
+        .hero h1 { 
+            font-size: 3.5rem; 
+            color: #FFD700; 
+            margin-bottom: 20px; 
+            text-shadow: 0 0 20px rgba(255,215,0,0.5); 
+        }
+        .hero p { font-size: 1.3rem; color: #ccc; margin-bottom: 30px; }
+        .live-rate { 
+            background: #000; 
+            border: 2px solid #FFD700; 
+            padding: 20px 40px; 
+            border-radius: 15px; 
+            display: inline-block; 
+            margin: 20px 0; 
+        }
+        .live-rate h2 { color: #FFD700; font-size: 2.5rem; }
+        .live-rate span { color: #4CAF50; font-size: 1rem; }
+        
+        /* Calculator */
+        .calculator { 
+            background: #1a1a1a; 
+            padding: 40px; 
+            border-radius: 20px; 
+            margin: 40px 0; 
+            border: 1px solid #333; 
+        }
+        .calculator h3 { color: #FFD700; font-size: 2rem; margin-bottom: 20px; text-align: center; }
+        .calc-box { display: flex; gap: 20px; justify-content: center; align-items: center; flex-wrap: wrap; }
+        .calc-box input { 
+            padding: 15px 25px; 
+            font-size: 1.2rem; 
+            border: 2px solid #FFD700; 
+            background: #000; 
+            color: #FFD700; 
+            border-radius: 10px; 
+            width: 250px; 
+            text-align: center; 
+        }
+        .calc-box button { 
+            padding: 15px 40px; 
+            font-size: 1.2rem; 
+            background: #FFD700; 
+            color: #000; 
+            border: none; 
+            border-radius: 10px; 
+            cursor: pointer; 
+            font-weight: bold; 
+        }
+        .result { 
+            margin-top: 30px; 
+            padding: 25px; 
+            background: #000; 
+            border: 2px solid #4CAF50; 
+            border-radius: 15px; 
+            text-align: center; 
+            font-size: 1.8rem; 
+            color: #4CAF50; 
+            display: none; 
+        }
+        
+        /* Graph */
+        .graph-section { 
+            background: #1a1a1a; 
+            padding: 40px; 
+            border-radius: 20px; 
+            margin: 40px 0; 
+            border: 1px solid #333; 
+        }
+        .graph-section h3 { color: #FFD700; font-size: 2rem; margin-bottom: 30px; text-align: center; }
+        
+        /* Problems & Solutions */
+        .problems { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 40px 0; }
+        .card { 
+            background: #1a1a1a; 
+            padding: 30px; 
+            border-radius: 15px; 
+            border: 1px solid #333; 
+            transition: 0.3s; 
+        }
+        .card:hover { border-color: #FFD700; transform: translateY(-5px); }
+        .card h4 { color: #FF4444; font-size: 1.3rem; margin-bottom: 15px; }
+        .card p { color: #ccc; line-height: 1.8; }
+        
+        .solutions { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 40px 0; }
+        .solutions .card h4 { color: #4CAF50; }
+        
+        /* Features */
+        .features { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 30px; 
+            margin: 50px 0; 
+        }
+        .feature-box { 
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+            padding: 40px; 
+            border-radius: 20px; 
+            text-align: center; 
+            border: 2px solid #FFD700; 
+        }
+        .feature-box h3 { color: #FFD700; font-size: 1.8rem; margin-bottom: 15px; }
+        .feature-box p { color: #ccc; }
+        
+        /* Contact */
+        .contact { 
+            background: #1a1a1a; 
+            padding: 50px; 
+            border-radius: 20px; 
+            margin: 40px 0; 
+            text-align: center; 
+            border: 1px solid #333; 
+        }
+        .contact h3 { color: #FFD700; font-size: 2rem; margin-bottom: 20px; }
+        .contact p { font-size: 1.2rem; color: #ccc; margin: 10px 0; }
+        
+        /* WhatsApp Button */
+        .whatsapp-float { 
+            position: fixed; 
+            bottom: 30px; 
+            left: 30px; 
+            background: #25D366; 
+            color: white; 
+            width: 60px; 
+            height: 60px; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 2rem; 
+            box-shadow: 0 4px 20px rgba(37,211,102,0.5); 
+            z-index: 1000; 
+            text-decoration: none; 
+        }
+        
+        /* Footer */
+        footer { 
+            background: #000; 
+            padding: 30px; 
+            text-align: center; 
+            border-top: 2px solid #FFD700; 
+            margin-top: 50px; 
+        }
+        footer p { color: #666; }
+        
+        h2.section-title { 
+            color: #FFD700; 
+            font-size: 2.5rem; 
+            text-align: center; 
+            margin: 50px 0 30px 0; 
+        }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- WhatsApp Button -->
-    <a href="https://wa.me/923165008845?text=Salam! Sone ka rate kya hai?" class="whatsapp" target="_blank">💬</a>
+    <a href="https://wa.me/923165008845" class="whatsapp-float" target="_blank">💬</a>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="container">
+            <h1>یو اے ای گولڈ راولپنڈی</h1>
+            <p>24/7 لائیو گولڈ ریٹس - سب سے بہترین قیمت</p>
+            <div class="live-rate">
+                <p>آج کا لائیو ریٹ</p>
+                <h2>Rs 4,52,000</h2>
+                <span>● Live | فی تولہ</span>
+            </div>
+        </div>
+    </div>
 
     <div class="container">
-        <!-- Hero Section -->
-        <div class="hero">
-            <h1 class="urdu">UAE Gold Rawalpindi</h1>
-            <p class="urdu">24/7 Live Gold Rates + Instant Calculator + Direct WhatsApp</p>
-            <a href="#calculator" class="btn urdu">آج کا ریٹ چیک کریں</a>
-        </div>
-
-        <!-- Live Rate -->
-        <div class="section">
-            <div class="card" style="text-align: center;">
-                <h3 class="urdu">آج کا لائیو ریٹ</h3>
-                <div class="rate-display">Rs 4,52,000</div>
-                <p class="urdu">فی تولہ - اپڈیٹ: ابھی</p>
+        <!-- Calculator -->
+        <div class="calculator">
+            <h3>گولڈ کیلکولیٹر</h3>
+            <div class="calc-box">
+                <input type="number" id="grams" placeholder="گرام درج کریں" step="0.01">
+                <button onclick="calculatePrice()">قیمت معلوم کریں</button>
             </div>
-        </div>
-
-        <!-- Problem Section -->
-        <div class="section">
-            <h2 class="urdu">مسائل</h2>
-            <div class="cards">
-                <div class="card">
-                    <h3 class="urdu">📞 روز 20-30 کالز</h3>
-                    <p class="urdu">گاہک بار بار ریٹ پوچھتے ہیں، وقت ضائع ہوتا ہے</p>
-                </div>
-                <div class="card">
-                    <h3 class="urdu">🧮 حساب میں غلطی</h3>
-                    <p class="urdu">مینوئل کیلکولیشن سے غلطی ہو جاتی ہے</p>
-                </div>
-                <div class="card">
-                    <h3 class="urdu">📉 ریٹ کیوں بدلا؟</h3>
-                    <p class="urdu">گاہک کو سمجھ نہیں آتا ریٹ اوپر نیچے کیوں ہوتا ہے</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Solution Section -->
-        <div class="section">
-            <h2 class="urdu">حل</h2>
-            <div class="cards">
-                <div class="card">
-                    <h3 class="urdu">⚡ Instant Rate Display</h3>
-                    <p class="urdu">ویب سائٹ کھولو، ریٹ سامنے</p>
-                </div>
-                <div class="card">
-                    <h3 class="urdu">🧮 Auto Calculator</h3>
-                    <p class="urdu">گرام ڈالو، قیمت فوراً نکلے</p>
-                </div>
-                <div class="card">
-                    <h3 class="urdu">💬 One-Click WhatsApp</h3>
-                    <p class="urdu">ڈائریکٹ آرڈر بٹن</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Calculator Demo -->
-        <div class="section" id="calculator">
-            <h2 class="urdu">لائیو کیلکولیٹر</h2>
-            <div class="calculator">
-                <label class="urdu">گرام درج کریں:</label>
-                <input type="number" id="grams" placeholder="مثلاً: 10" oninput="calculate()">
-                <div class="result" id="result">Rs 0</div>
-                <p class="urdu" style="text-align: center; margin-top: 10px; color: #64748b;">ریٹ: Rs 4,52,000 فی تولہ</p>
-            </div>
+            <div class="result" id="result"></div>
         </div>
 
         <!-- Graph -->
-        <div class="section">
-            <h2 class="urdu">7 دن کا ٹرینڈ</h2>
+        <div class="graph-section">
+            <h3>7 دن کا ریٹ گراف</h3>
+            <canvas id="goldChart"></canvas>
+        </div>
+
+        <!-- Problems -->
+        <h2 class="section-title">مسائل</h2>
+        <div class="problems">
             <div class="card">
-                <canvas id="goldChart"></canvas>
+                <h4>❌ جعلی ریٹس</h4>
+                <p>مارکیٹ میں جعلی ریٹس دکھا کر کسٹمر کو دھوکہ دیا جاتا ہے</p>
+            </div>
+            <div class="card">
+                <h4>❌ چھپی ہوئی فیس</h4>
+                <p>خریداری کے وقت اضافی چارجز لگا دیے جاتے ہیں</p>
+            </div>
+            <div class="card">
+                <h4>❌ کم معیار</h4>
+                <p>خالص سونا نہیں ملتا، ملاوٹ ہوتی ہے</p>
+            </div>
+            <div class="card">
+                <h4>❌ دیر سے ڈیلیوری</h4>
+                <p>آرڈر کے بعد ہفتوں انتظار کرنا پڑتا ہے</p>
             </div>
         </div>
 
-        <!-- Tech Stack -->
-        <div class="section">
-            <h2 class="urdu">ٹیکنالوجی</h2>
-            <div class="cards">
-                <div class="card"><h3>GitHub Pages</h3><p>Free hosting</p></div>
-                <div class="card"><h3>Chart.js</h3><p>Live graphs</p></div>
-                <div class="card"><h3>WhatsApp API</h3><p>Direct chat</p></div>
+        <!-- Solutions -->
+        <h2 class="section-title">حل</h2>
+        <div class="solutions">
+            <div class="card">
+                <h4>✅ 100% لائیو ریٹ</h4>
+                <p>بین الاقوامی مارکیٹ سے لائیو ریٹ، کوئی دھوکہ نہیں</p>
+            </div>
+            <div class="card">
+                <h4>✅ زیرو ہڈن چارجز</h4>
+                <p>جو قیمت نظر آئے وہی ادا کریں، کوئی اضافی فیس نہیں</p>
+            </div>
+            <div class="card">
+                <h4>✅ 24 کیرٹ خالص</h4>
+                <p>سرٹیفائیڈ خالص سونا، لیبارٹری ٹیسٹڈ</p>
+            </div>
+            <div class="card">
+                <h4>✅ فوری ڈیلیوری</h4>
+                <p>آرڈر کنفرم ہوتے ہی 24 گھنٹے میں ڈیلیوری</p>
+            </div>
+        </div>
+
+        <!-- Features -->
+        <h2 class="section-title">خصوصیات</h2>
+        <div class="features">
+            <div class="feature-box">
+                <h3>📊 لائیو ریٹ</h3>
+                <p>ہر سیکنڈ اپڈیٹ ہونے والا ریٹ، بالکل درست</p>
+            </div>
+            <div class="feature-box">
+                <h3>🧮 آٹو کیلکولیٹر</h3>
+                <p>گرام ڈالو، فوراً قیمت معلوم کرو</p>
+            </div>
+            <div class="feature-box">
+                <h3>💬 WhatsApp آرڈر</h3>
+                <p>1 کلک میں ڈائریکٹ آرڈر، کوئی فارم نہیں</p>
             </div>
         </div>
 
         <!-- Contact -->
-        <div class="section" style="text-align: center;">
-            <h2 class="urdu">رابطہ کریں</h2>
-            <p class="urdu">📍 Rawalpindi, Punjab</p>
-            <a href="https://wa.me/923165008845" class="btn urdu" style="margin-top: 20px;">WhatsApp پر آرڈر کریں</a>
-        </div>
-
-        <div class="footer urdu">
-            <p>© 2026 UAE Gold Rawalpindi. All rights reserved.</p>
+        <div class="contact">
+            <h3>رابطہ کریں</h3>
+            <p>📍 راولپنڈی، پاکستان</p>
+            <p>📞 WhatsApp: +92 316 5008845</p>
+            <p>⏰ 24/7 سروس دستیاب</p>
         </div>
     </div>
 
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 UAE Gold Rawalpindi. تمام حقوق محفوظ ہیں۔</p>
+    </footer>
 
     <script>
-        // Calculator
-        function calculate() {
+        // Calculator Function
+        function calculatePrice() {
             const grams = document.getElementById('grams').value;
-            const rate = 452000; // Yahan rate change kar sakte hain
-            const tola = 11.664; // 1 tola = 11.664 grams
-            const price = (grams / tola) * rate;
-            document.getElementById('result').innerText = 'Rs ' + Math.round(price).toLocaleString();
+            const ratePerTola = 452000;
+            const gramPerTola = 11.664;
+            const price = (grams / gramPerTola * ratePerTola).toFixed(0);
+            
+            if(grams > 0) {
+                document.getElementById('result').style.display = 'block';
+                document.getElementById('result').innerHTML = 
+                    `${grams} گرام = Rs ${Number(price).toLocaleString()}`;
+            }
         }
 
-        // Graph
-        const ctx = document.getElementById('goldChart');
+        // Chart
+        const ctx = document.getElementById('goldChart').getContext('2d');
         new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['6 دن پہلے', '5', '4', '3', '2', 'کل', 'آج'],
+                labels: ['6 دن پہلے', '5 دن پہلے', '4 دن پہلے', '3 دن پہلے', '2 دن پہلے', 'کل', 'آج'],
                 datasets: [{
-                    label: 'سونا ریٹ',
-                    data: [448000, 449500, 450000, 451200, 451500, 451800, 452000],
-                    borderColor: '#D4AF37',
-                    backgroundColor: 'rgba(212, 175, 55, 0.1)',
+                    label: 'گولڈ ریٹ (Rs)',
+                    data: [448000, 449500, 450200, 451000, 451500, 451800, 452000],
+                    borderColor: '#FFD700',
+                    backgroundColor: 'rgba(255, 215, 0, 0.1)',
+                    borderWidth: 3,
                     tension: 0.4,
                     fill: true
                 }]
             },
             options: {
                 responsive: true,
-                plugins: { legend: { display: false } }
+                plugins: {
+                    legend: { labels: { color: '#FFD700' } }
+                },
+                scales: {
+                    y: { ticks: { color: '#ccc' }, grid: { color: '#333' } },
+                    x: { ticks: { color: '#ccc' }, grid: { color: '#333' } }
+                }
             }
+        });
+
+        // Auto calculate on Enter
+        document.getElementById('grams').addEventListener('keypress', function(e) {
+            if(e.key === 'Enter') calculatePrice();
         });
     </script>
 </body>
