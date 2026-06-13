@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UAE Gold Rawalpindi - Live Gold Rates</title>
+    <title>UAE Gold Rawalpindi - Live Gold Rates 24/7</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -19,6 +20,9 @@
             background: #1e293b; 
             padding: 15px 0; 
             border-bottom: 1px solid #334155; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100; 
         }
         .nav-content { 
             max-width: 1200px; 
@@ -48,26 +52,133 @@
         }
         
         /* Hero */
-        .hero { text-align: center; padding: 40px 20px; }
+        .hero { text-align: center; padding: 50px 20px 30px; }
         .badge { 
             background: #334155; 
-            color: #fbbf24; 
-            padding: 5px 15px; 
+            color: #10b981; 
+            padding: 6px 16px; 
             border-radius: 20px; 
             font-size: 12px; 
-            display: inline-block; 
-            margin-bottom: 15px; 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 6px; 
+            margin-bottom: 20px; 
         }
-        .hero h1 { font-size: 2.5rem; margin-bottom: 10px; }
-        .hero p { color: #94a3b8; font-family: 'Noto Nastaliq Urdu'; }
+        .badge::before { 
+            content: ''; 
+            width: 6px; 
+            height: 6px; 
+            background: #10b981; 
+            border-radius: 50%; 
+            animation: pulse 2s infinite; 
+        }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .hero h1 { font-size: 3rem; margin-bottom: 12px; }
+        .hero h1 .gold { color: #fbbf24; }
+        .hero p { color: #94a3b8; font-size: 1.1rem; margin-bottom: 10px; }
+        .hero .urdu { font-family: 'Noto Nastaliq Urdu'; color: #94a3b8; font-size: 1rem; }
+        .hero-buttons { display: flex; gap: 15px; justify-content: center; margin: 30px 0; }
+        .btn-primary { 
+            background: #fbbf24; 
+            color: #000; 
+            padding: 14px 30px; 
+            border-radius: 10px; 
+            font-weight: 600; 
+            border: none; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+        }
+        .btn-secondary { 
+            background: #334155; 
+            color: #fff; 
+            padding: 14px 30px; 
+            border-radius: 10px; 
+            font-weight: 600; 
+            border: none; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+        }
+        .features-row { 
+            display: flex; 
+            gap: 30px; 
+            justify-content: center; 
+            margin-top: 20px; 
+            font-size: 14px; 
+            color: #94a3b8; 
+        }
+        
+        /* Rate Card */
+        .rate-card { 
+            background: #fff; 
+            color: #0f172a; 
+            border-radius: 20px; 
+            padding: 30px; 
+            margin: 40px auto; 
+            max-width: 800px; 
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3); 
+        }
+        .rate-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 20px; }
+        .rate-title { font-size: 14px; color: #64748b; }
+        .rate-title .urdu { font-family: 'Noto Nastaliq Urdu'; display: block; margin-top: 4px; }
+        .rate-change { 
+            background: #dcfce7; 
+            color: #16a34a; 
+            padding: 4px 12px; 
+            border-radius: 20px; 
+            font-size: 12px; 
+            font-weight: 600; 
+        }
+        .main-rate { font-size: 3.5rem; font-weight: 700; margin: 10px 0; }
+        .rate-unit { color: #64748b; font-size: 14px; margin-bottom: 25px; }
+        .rate-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
+        .rate-box { background: #f8fafc; padding: 20px; border-radius: 12px; }
+        .rate-box label { font-size: 12px; color: #64748b; display: block; margin-bottom: 8px; }
+        .rate-box .price { font-size: 1.5rem; font-weight: 700; }
+        .whatsapp-btn { 
+            width: 100%; 
+            padding: 16px; 
+            background: #25D366; 
+            color: #fff; 
+            border: none; 
+            border-radius: 12px; 
+            font-size: 16px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 10px; 
+        }
         
         /* Calculator */
+        .calc-section { padding: 60px 20px; }
+        .section-badge { 
+            background: #334155; 
+            color: #fbbf24; 
+            padding: 6px 16px; 
+            border-radius: 20px; 
+            font-size: 12px; 
+            display: block; 
+            width: fit-content; 
+            margin: 0 auto 15px; 
+        }
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 10px; }
+        .section-subtitle { 
+            text-align: center; 
+            color: #94a3b8; 
+            font-family: 'Noto Nastaliq Urdu'; 
+            margin-bottom: 40px; 
+        }
         .calc-wrapper { 
             background: #1e293b; 
             border-radius: 16px; 
             padding: 30px; 
-            margin: 30px auto; 
             max-width: 900px; 
+            margin: 0 auto; 
             border: 1px solid #334155; 
         }
         .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
@@ -101,7 +212,6 @@
         }
         .weight-btn:hover { border-color: #fbbf24; }
         
-        /* Price Breakdown */
         .breakdown { background: #0f172a; padding: 20px; border-radius: 12px; }
         .breakdown-title { 
             display: flex; 
@@ -127,43 +237,67 @@
         }
         .total-box h3 { font-size: 2rem; color: #fff; margin: 10px 0; }
         .total-box p { color: #fbbf24; font-family: 'Noto Nastaliq Urdu'; font-size: 14px; }
-        .whatsapp-btn { 
-            width: 100%; 
-            padding: 14px; 
-            background: #25D366; 
-            color: #fff; 
-            border: none; 
-            border-radius: 10px; 
-            font-size: 16px; 
-            font-weight: 600; 
-            cursor: pointer; 
+        
+        /* Problems */
+        .problems-section { background: #fff; color: #0f172a; padding: 60px 20px; }
+        .problems-badge { 
+            background: #fee2e2; 
+            color: #dc2626; 
+            padding: 6px 16px; 
+            border-radius: 20px; 
+            font-size: 12px; 
+            display: block; 
+            width: fit-content; 
+            margin: 0 auto 15px; 
+        }
+        .problems-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 25px; 
+            max-width: 1100px; 
+            margin: 40px auto 0; 
+        }
+        .problem-card { 
+            background: #f8fafc; 
+            padding: 30px; 
+            border-radius: 16px; 
+            border: 1px solid #e2e8f0; 
+        }
+        .problem-icon { 
+            width: 50px; 
+            height: 50px; 
+            border-radius: 12px; 
             display: flex; 
             align-items: center; 
             justify-content: center; 
-            gap: 8px; 
+            font-size: 24px; 
+            margin-bottom: 20px; 
+        }
+        .problem-card h3 { font-size: 1.3rem; margin-bottom: 10px; }
+        .problem-card .subtitle { color: #64748b; font-size: 14px; margin-bottom: 12px; }
+        .problem-card p { color: #475569; font-size: 14px; line-height: 1.6; margin-bottom: 12px; }
+        .problem-card .urdu { 
+            font-family: 'Noto Nastaliq Urdu'; 
+            color: #94a3b8; 
+            font-size: 13px; 
+            line-height: 1.8; 
         }
         
         /* Tech Stack */
-        .tech-section { padding: 60px 20px; background: #fff; color: #0f172a; }
-        .tech-section h2 { text-align: center; font-size: 2rem; margin-bottom: 10px; }
-        .tech-section .subtitle { 
-            text-align: center; 
-            color: #64748b; 
-            font-family: 'Noto Nastaliq Urdu'; 
-            margin-bottom: 40px; 
-        }
+        .tech-section { padding: 60px 20px; background: #0f172a; }
         .tech-grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
             gap: 20px; 
             max-width: 1000px; 
-            margin: 0 auto 40px; 
+            margin: 40px auto; 
         }
         .tech-card { 
-            background: #f8fafc; 
+            background: #1e293b; 
             padding: 30px; 
             border-radius: 12px; 
             text-align: center; 
+            border: 1px solid #334155; 
         }
         .tech-card .icon { 
             width: 50px; 
@@ -176,8 +310,8 @@
             font-size: 24px; 
         }
         .tech-card h3 { font-size: 1.1rem; margin-bottom: 8px; }
-        .tech-card p { font-size: 13px; color: #64748b; margin-bottom: 8px; }
-        .tech-card .urdu { font-family: 'Noto Nastaliq Urdu'; color: #94a3b8; font-size: 12px; }
+        .tech-card p { font-size: 13px; color: #94a3b8; margin-bottom: 8px; }
+        .tech-card .urdu { font-family: 'Noto Nastaliq Urdu'; color: #64748b; font-size: 12px; }
         
         .stats { 
             display: flex; 
@@ -187,12 +321,14 @@
             text-align: center; 
         }
         .stat h3 { font-size: 2.5rem; color: #fbbf24; }
-        .stat p { color: #64748b; font-size: 14px; }
+        .stat p { color: #94a3b8; font-size: 14px; }
         
         @media (max-width: 768px) {
-            .calc-grid { grid-template-columns: 1fr; }
+            .calc-grid, .rate-grid { grid-template-columns: 1fr; }
             .nav-links { display: none; }
             .stats { flex-direction: column; gap: 30px; }
+            .hero h1 { font-size: 2rem; }
+            .main-rate { font-size: 2.5rem; }
         }
     </style>
 </head>
@@ -219,13 +355,59 @@
 
     <!-- Hero -->
     <div class="hero">
-        <div class="badge">Live Demo</div>
-        <h1>Embedded Calculator</h1>
-        <p>لائیو کیلکولیٹر: گرام درج کریں اور قیمت دیکھیں</p>
+        <div class="badge">Live Rates Updated 1 mins ago</div>
+        <h1>UAE Gold <span class="gold">Rawalpindi</span></h1>
+        <p>24/7 Live Gold Rates + Instant Calculator + Direct WhatsApp</p>
+        <p class="urdu">لائیو گولڈ ریٹس + انسٹنٹ کیلکولیٹر + ڈائریکٹ واٹس ایپ آرڈر</p>
+        
+        <div class="hero-buttons">
+            <button class="btn-primary">📈 Check Today's Rate</button>
+            <button class="btn-secondary">🧮 Open Calculator</button>
+        </div>
+        
+        <div class="features-row">
+            <span>✓ 100% Authentic Rates</span>
+            <span>⏰ 24/7 Live Updates</span>
+            <span>⚡ Instant Calculation</span>
+        </div>
     </div>
 
-    <!-- Calculator -->
+    <!-- Rate Card -->
     <div class="container">
+        <div class="rate-card">
+            <div class="rate-header">
+                <div class="rate-title">
+                    Today's Gold Rate
+                    <span class="urdu">آج کا گولڈ ریٹ</span>
+                </div>
+                <div class="rate-change">↑ +1.2%</div>
+            </div>
+            <div class="main-rate">Rs 4,52,000</div>
+            <div class="rate-unit">per Tola (24K)</div>
+            
+            <div class="rate-grid">
+                <div class="rate-box">
+                    <label>22K Rate</label>
+                    <div class="price">Rs 4,14,333</div>
+                </div>
+                <div class="rate-box">
+                    <label>21K Rate</label>
+                    <div class="price">Rs 3,95,500</div>
+                </div>
+            </div>
+            
+            <button class="whatsapp-btn" onclick="window.open('https://wa.me/923165008845', '_blank')">
+                💬 Order on WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <!-- Calculator Section -->
+    <div class="calc-section" id="calc">
+        <div class="section-badge">Live Demo</div>
+        <h2 class="section-title">Embedded Calculator</h2>
+        <p class="section-subtitle">لائیو کیلکولیٹر: گرام درج کریں اور قیمت دیکھیں</p>
+        
         <div class="calc-wrapper">
             <div class="calc-grid">
                 <div>
@@ -233,8 +415,8 @@
                         <label>Gold Purity / گولڈ پیوریٹی</label>
                         <select id="purity">
                             <option value="452000">24K - 99.9% Pure (Rs 4,52,000/tola)</option>
-                            <option value="414000">22K - 91.6% Pure (Rs 4,14,000/tola)</option>
-                            <option value="339000">18K - 75% Pure (Rs 3,39,000/tola)</option>
+                            <option value="414333">22K - 91.6% Pure (Rs 4,14,333/tola)</option>
+                            <option value="395500">21K - 87.5% Pure (Rs 3,95,500/tola)</option>
                         </select>
                     </div>
                     
@@ -285,19 +467,49 @@
                     </div>
                     
                     <button class="whatsapp-btn" onclick="orderWhatsApp()">
-                        <span>💬</span>
-                        <span>Order via WhatsApp</span>
+                        💬 Order via WhatsApp
                     </button>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Problems Section -->
+    <div class="problems-section">
+        <div class="problems-badge">Common Problems</div>
+        <h2 class="section-title">Problems Gold Dealers Face Daily</h2>
+        <p class="section-subtitle">سنار کلے یلو اور ڈیلرز کے مسائل</p>
+        
+        <div class="problems-grid">
+            <div class="problem-card">
+                <div class="problem-icon" style="background: #fee2e2; color: #dc2626;">📞</div>
+                <h3>20-30 Calls Daily</h3>
+                <p class="subtitle">Rate Queries Only</p>
+                <p>Dealers waste hours answering the same "آج کا ریٹ کیا ہے؟" calls instead of focusing on sales</p>
+                <p class="urdu">روزانہ 20-30 صرف ریٹ پوچھنے کے لیے</p>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon" style="background: #fef3c7; color: #f59e0b;">🧮</div>
+                <h3>Manual Calculation Errors</h3>
+                <p class="subtitle">Wrong Price Slips</p>
+                <p>Mistakes in gram to tola conversion cost thousands in losses and customer disputes</p>
+                <p class="urdu">دستی کیلکولیشن میں غلطیاں اور نقصان</p>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon" style="background: #dbeafe; color: #2563eb;">❓</div>
+                <h3>Why Did Rate Change?</h3>
+                <p class="subtitle">Confusion for Customers</p>
+                <p>No historical data or trends to explain rate fluctuations leads to trust issues</p>
+                <p class="urdu">ریٹ میں تبدیلی کی وجہ سے کنفیوژن</p>
+            </div>
+        </div>
+    </div>
+
     <!-- Tech Stack -->
-    <div class="tech-section">
-        <div class="badge" style="display: block; width: fit-content; margin: 0 auto 15px;">Tech Stack</div>
-        <h2>Built with Modern Technology</h2>
-        <p class="subtitle">جدید ٹیکنالوجی سے بنایا گیا</p>
+    <div class="tech-section" id="tech">
+        <div class="section-badge">Tech Stack</div>
+        <h2 class="section-title">Built with Modern Technology</h2>
+        <p class="section-subtitle">جدید ٹیکنالوجی سے بنایا گیا</p>
         
         <div class="tech-grid">
             <div class="tech-card">
